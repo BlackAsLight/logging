@@ -5,16 +5,8 @@
 	try { Deno.statSync('./logs/') } catch { Deno.mkdirSync('./logs/') }
 	const file = Deno.createSync(`./logs/${formatDate()}.log`)
 
-	const stringifyBigInts = (data: any): any => {
-		if (typeof data !== 'object' || data === null)
-			return data
-		if (Object.prototype.toString.call(data) === '[object Array]')
-			return data.map((d: any) => typeof d === 'bigint' ? `${d}n` : stringifyBigInts(d))
-		return Object.fromEntries(Object.entries(data).map(([ key, value ]) => [ key, typeof value === 'bigint' ? `${value}n` : stringifyBigInts(value) ]))
-	}
-
 	const write = (type: string, ...data: any[]) => {
-		const record = `[${formatDate()}] [${type}] ${data.map(d => typeof d === 'object' ? JSON.stringify(stringifyBigInts(d)) : d).join(' ')}`.trim()
+		const record = `[${formatDate()}] [${type}] ${data.map(d => JSON.stringify(d, (_key, value) => typeof value === 'bigint' ? `${value}n` : value)).join(' ')}`.trim()
 		file.write(Uint8Array.from(`${record}\n`.split('').map(char => char.charCodeAt(0))))
 		return record
 	}
