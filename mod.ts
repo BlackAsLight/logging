@@ -6,7 +6,7 @@
 	const file = Deno.createSync(`./logs/${formatDate()}.log`)
 
 	const stringifyBigInts = (data: any): any => {
-		if (typeof data !== 'object')
+		if (typeof data !== 'object' || data === null)
 			return data
 		if (Object.prototype.toString.call(data) === '[object Array]')
 			return data.map((d: any) => typeof d === 'bigint' ? `${d}n` : stringifyBigInts(d))
