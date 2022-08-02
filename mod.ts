@@ -6,7 +6,10 @@
 	const file = Deno.createSync(`./logs/${formatDate()}.log`)
 
 	const write = (type: string, ...data: any[]) => {
-		const record = `[${formatDate()}] [${type}] ${data.map(d => JSON.stringify(d, (_key, value) => typeof value === 'bigint' ? `${value}n` : value)).join(' ')}`.trim()
+		const record = `[${formatDate()}] [${type}] ${data.map(d => {
+			const json = JSON.stringify(d, (_key, value) => typeof value === 'bigint' ? `${value}n` : value)
+			return json[0] === '"' ? json.slice(1, -1) : json
+		}).join(' ')}`.trim()
 		file.write(Uint8Array.from(`${record}\n`.split('').map(char => char.charCodeAt(0))))
 		return record
 	}
