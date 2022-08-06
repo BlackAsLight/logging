@@ -7,12 +7,14 @@ This module will log your terminal output to a `.log` file under the directory
 implementation to also record their terminal output down. The way you use these
 functions will not change.
 
-## Usage
+This module also has an addon.ts import which will merge your logs that are a day+ old and zip them. As long as the format of the logs follows that of the mod.ts outputs, there will be no problem. Allowing you to merge logs from several programs into one. The merged logs will be sorted.
+
+## Usage mod.ts
 
 ### main.ts
 
 ```ts
-import 'https://deno.land/x/logging@v0.0.0/mod.ts';
+import 'https://deno.land/x/logging@v1.0.0/mod.ts';
 
 console.log('Hello World');
 ```
@@ -27,4 +29,12 @@ console.log('Hello World');
 
 ```
 [1970-00-01T00:00:00Z] [log] Hello World
+```
+
+## Usage addon.ts
+
+```ts
+import mergeLogs from 'https://deno.land/x/logging@v1.0.0/addon.ts';
+
+await mergeLogs(quiet: boolean = false)
 ```
