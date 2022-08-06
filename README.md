@@ -22,13 +22,13 @@ console.log('Hello World');
 ### terminal
 
 ```
-[1970-00-01T00:00:00Z] [log] Hello World
+[1970-00-01T00:00:00.000Z] [log] Hello World
 ```
 
 ### ./log/1970-00-01T00:00:00Z.log
 
 ```
-[1970-00-01T00:00:00Z] [log] Hello World
+[1970-00-01T00:00:00.000Z] [log] Hello World
 ```
 
 ## Usage addon.ts
