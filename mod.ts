@@ -1,14 +1,12 @@
 // deno-lint-ignore-file no-explicit-any
 (function () {
-	const formatDate = (date = new Date()) => `${date.getUTCFullYear()}-${date.getUTCMonth().toString().padStart(2, '0')}-${date.getUTCDate().toString().padStart(2, '0')}T${date.getUTCHours().toString().padStart(2, '0')}:${date.getUTCMinutes().toString().padStart(2, '0')}:${date.getUTCSeconds().toString().padStart(2, '0')}Z`
-
 	try { Deno.statSync('./logs/') } catch { Deno.mkdirSync('./logs/') }
-	const file = Deno.createSync(`./logs/${formatDate()}.log`)
+	const file = Deno.createSync(`./logs/${new Date().toJSON()}.log`)
 
 	const write = (type: string, ...data: any[]) => {
-		const record = `[${formatDate()}] [${type}] ${data.map(d => {
+		const record = `[${new Date().toJSON()}] [${type}] ${data.map(d => {
 			const json = JSON.stringify(d, (_key, value) => typeof value === 'bigint' ? `${value}n` : value)
-			return json[0] === '"' ? json.slice(1, -1) : json
+			return json[ 0 ] === '"' ? json.slice(1, -1) : json
 		}).join(' ')}`.trim()
 		file.write(Uint8Array.from(`${record}\n`.split('').map(char => char.charCodeAt(0))))
 		return record
