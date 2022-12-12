@@ -14,7 +14,7 @@ This module also has an addon.ts import which will merge your logs that are a da
 ### main.ts
 
 ```ts
-import 'https://deno.land/x/logging@v1.0.0/mod.ts';
+import 'https://deno.land/x/logging@v2.0.0/mod.ts';
 
 console.log('Hello World');
 ```
@@ -34,7 +34,7 @@ console.log('Hello World');
 ## Usage addon.ts
 
 ```ts
-import mergeLogs from 'https://deno.land/x/logging@v1.0.0/addon.ts';
+import mergeLogs from 'https://deno.land/x/logging@v2.0.0/addon.ts';
 
 await mergeLogs(quiet: boolean = false)
 ```
